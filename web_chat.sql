@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 29, 2016 at 12:15 PM
+-- Generation Time: Oct 29, 2016 at 04:56 PM
 -- Server version: 5.7.12
 -- PHP Version: 7.0.10-1+deb.sury.org~trusty+1
 
@@ -27,10 +27,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `chat` (
-  `user_id` int(11) NOT NULL,
+  `user_id` varchar(50) NOT NULL,
   `date` datetime NOT NULL,
-  `friend_id` int(11) NOT NULL,
-  `chat` varchar(100) NOT NULL,
+  `friend_id` varchar(50) NOT NULL,
+  `chat` text NOT NULL,
   `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -41,9 +41,8 @@ CREATE TABLE `chat` (
 --
 
 CREATE TABLE `friend` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `friend_id` int(11) NOT NULL
+  `user_id` varchar(50) NOT NULL,
+  `friend_id` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -53,10 +52,10 @@ CREATE TABLE `friend` (
 --
 
 CREATE TABLE `groups` (
-  `id` int(11) NOT NULL,
+  `id` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `admin_id` int(11) NOT NULL
+  `user_id` varchar(50) NOT NULL,
+  `admin_id` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -66,10 +65,10 @@ CREATE TABLE `groups` (
 --
 
 CREATE TABLE `group_chat` (
-  `user_id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL,
+  `group_id` varchar(50) NOT NULL,
+  `user_id` varchar(50) NOT NULL,
   `date` datetime NOT NULL,
-  `chat` varchar(100) NOT NULL,
+  `chat` text NOT NULL,
   `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -80,19 +79,11 @@ CREATE TABLE `group_chat` (
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+  `id` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `photo_url` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`id`, `name`, `password`, `photo_url`) VALUES
-(1, 'edwin', 'secret', 'www.web-chat.com'),
-(2, 'randi', 'secret', 'www.web-chat.com');
 
 --
 -- Indexes for dumped tables
@@ -108,8 +99,7 @@ ALTER TABLE `chat`
 -- Indexes for table `friend`
 --
 ALTER TABLE `friend`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`user_id`,`friend_id`);
 
 --
 -- Indexes for table `groups`
