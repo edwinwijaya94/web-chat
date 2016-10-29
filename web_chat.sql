@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 28, 2016 at 10:50 AM
+-- Generation Time: Oct 29, 2016 at 12:15 PM
 -- Server version: 5.7.12
 -- PHP Version: 7.0.10-1+deb.sury.org~trusty+1
 
@@ -82,8 +82,17 @@ CREATE TABLE `group_chat` (
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(50) NOT NULL,
+  `photo_url` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `name`, `password`, `photo_url`) VALUES
+(1, 'edwin', 'secret', 'www.web-chat.com'),
+(2, 'randi', 'secret', 'www.web-chat.com');
 
 --
 -- Indexes for dumped tables
