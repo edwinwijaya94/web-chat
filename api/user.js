@@ -52,7 +52,7 @@ router.post('/register' , function(req, res) {
 	if(user.photoUrl == ""){
 		user.photoUrl="http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png"; //default photo
 	}
-	console.log(user);
+
 	mysql.getConnection(function(err, connection) {
 		if(err){
 			res.json(err);
@@ -87,6 +87,62 @@ router.post('/register' , function(req, res) {
 					})
 				} else {
 					res.json(result);
+				}
+			}
+		);
+	});
+});
+
+//login
+router.post('/login' , function(req, res) {
+	var user = req.body;
+	var result;
+
+	mysql.getConnection(function(err, connection) {
+		if(err){
+			res.json(err);
+		}
+
+		async.series([
+			function(callback) {
+				connection.query('SELECT * FROM user WHERE name = ? AND password = ?', [user.name, user.password], function(err, rows, fields) {
+					if(err) {
+						callback(err);
+					} else {
+						result = rows[0];
+						callback(null);
+					}
+				});		
+			}, 
+			function(callback){
+				if(result != null){
+					connection.query('SELECT * FROM user WHERE id = ?', [result.id], function(err, rows, fields) {
+						if(err) {
+							callback(err);
+						} else {
+							result = rows[0];
+							callback(null);
+						}
+					});
+				} else {
+					callback(null);
+				}
+
+			}], function(err) {
+				connection.release();
+				if(err) {
+					res.status(500);
+					res.json({
+						error : err.message
+					})
+				} else {
+					if(result != null) {
+						res.json(result);
+					} else {
+						res.json({
+							error : "Wrong username or password"
+						})
+					}
 				}
 			}
 		);
