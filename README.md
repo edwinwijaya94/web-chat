@@ -17,21 +17,20 @@ Web chat using rabbit-mq
    example :
    ```
    {
-  	"name": "Hello 2",
-  	"member": [
-  			{"id":"01fa85ea-d2bc-4852-ab35-7db61c0d37b2"},
-  			{"id":"5b1ec427-7d0e-491e-b136-bfae421378b0"},
-  			{"id":"856d434b-fa99-4061-8275-15f918bcab76"}
-  		],
-  	"admin_id": "01fa85ea-d2bc-4852-ab35-7db61c0d37b2"
-	}
+	  "name": "Hello 3",
+	  "member": [{"name":"gerry"},
+	  				{"name":"elvan"},
+	  				{"name":"jessica"}
+	  			],
+	  "admin_id": "01fa85ea-d2bc-4852-ab35-7db61c0d37b2"
+   }
    ```
  - Add a member to group : `POST api/group/add`
  	example :
  	```
  	{
 		"group_id":"6cf7c712-a18d-4d13-886e-bd2ef3d66b68",
-		"user_id":"4577946d-7452-44c3-a6a2-150f749a554e"
+		"member_name":"erick"
 	}
  	```
  - Remove a member from group : `POST api/group/remove`
@@ -39,6 +38,6 @@ Web chat using rabbit-mq
  	```
  	{
 		"group_id":"6cf7c712-a18d-4d13-886e-bd2ef3d66b68",
-		"user_id":"4577946d-7452-44c3-a6a2-150f749a554e"
+		"member_name":"erick"
 	}
  	```

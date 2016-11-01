@@ -58,6 +58,7 @@ router.get('/' , function(req, res) {
 router.post('/create' , function(req, res) {
 	var group = req.body;
 	var result;
+	var memberIds = [];
 
 	//generate id
 	group.id = uuid.v4();
@@ -69,9 +70,29 @@ router.post('/create' , function(req, res) {
 
 		async.series([
 			function(callback) {
-				//insert for every member
+				//get user id for every member
 				for(var i=0; i<group.member.length; i++){
-					connection.query('INSERT INTO groups(id, name, user_id, admin_id) VALUES(?,?,?,?)', [group.id, group.name, group.member[i].id, group.admin_id], function(err, rows, fields) {
+					connection.query('SELECT id FROM user WHERE name = ?', [group.member[i].name], function(err, rows, fields) {
+						if(err) {
+							callback(err);
+							return;
+						}
+						memberIds.push(rows[0].id);
+					});
+				}
+				var isQueryFinished = function(){
+					if(memberIds.length == group.member.length){
+						callback(null);
+						return;
+					}
+					setTimeout(isQueryFinished, 50);
+				}
+				isQueryFinished();
+			},
+			function(callback) {
+				//insert for every member
+				for(var i=0; i<memberIds.length; i++){
+					connection.query('INSERT INTO groups(id, name, user_id, admin_id) VALUES(?,?,?,?)', [group.id, group.name, memberIds[i], group.admin_id], function(err, rows, fields) {
 						if(err) {
 							callback(err);
 							return;
@@ -108,8 +129,9 @@ router.post('/create' , function(req, res) {
 
 //add a member, assume user exist
 router.post('/add' , function(req, res) {
-	var groupId = req.body.group_id; //user id
-	var userId = req.body.user_id; //user id
+	var groupId = req.body.group_id; //group id
+	var memberName = req.body.member_name; //member name
+	var memberId;
 	var groupName;
 	var adminId;
 	
@@ -121,6 +143,17 @@ router.post('/add' , function(req, res) {
 		}
 
 		async.series([
+			function(callback) {
+				//get group name and admin
+				connection.query('SELECT id FROM user WHERE name = ?', [memberName], function(err, rows, fields) {
+					if(err) {
+						callback(err);
+					} else {
+						memberId = rows[0].id;
+						callback(null);
+					}
+				});		
+			},
 			function(callback) {
 				//get group name and admin
 				connection.query('SELECT name, admin_id FROM groups WHERE id = ? LIMIT 1', [groupId], function(err, rows, fields) {
@@ -135,7 +168,7 @@ router.post('/add' , function(req, res) {
 			},
 			function(callback){
 				//add new group member
-				connection.query('INSERT INTO groups(id, name, user_id, admin_id) VALUES(?, ?, ?, ?)', [groupId, groupName, userId, adminId], function(err, rows, fields) {
+				connection.query('INSERT INTO groups(id, name, user_id, admin_id) VALUES(?, ?, ?, ?)', [groupId, groupName, memberId, adminId], function(err, rows, fields) {
 					if(err) {
 						callback(err);
 					} else {
@@ -185,8 +218,9 @@ router.post('/add' , function(req, res) {
 //remove a member from group
 router.post('/remove' , function(req, res) {
 	var groupId = req.body.group_id; //user id
-	var userId = req.body.user_id; //user id
-	
+	var memberName = req.body.member_name; //member name
+	var memberId;
+
 	var result = {};
 
 	mysql.getConnection(function(err, connection) {
@@ -197,7 +231,18 @@ router.post('/remove' , function(req, res) {
 		async.series([
 			function(callback){
 				//remove group member
-				connection.query('DELETE FROM groups WHERE id = ? AND user_id = ?', [groupId, userId], function(err, rows, fields) {
+				connection.query('SELECT id FROM user WHERE name = ?', [memberName], function(err, rows, fields) {
+					if(err) {
+						callback(err);
+					} else {
+						memberId = rows[0].id;
+						callback(null);
+					}
+				});	
+			},
+			function(callback){
+				//remove group member
+				connection.query('DELETE FROM groups WHERE id = ? AND user_id = ?', [groupId, memberId], function(err, rows, fields) {
 					if(err) {
 						callback(err);
 					} else {

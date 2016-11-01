@@ -15,6 +15,14 @@ var api = require('./api');
 //create app
 var app = express();
 
+//init server socket
+var server = require('http').Server(app);
+module.exports = {app: app, server: server};
+
+var io = require('socket.io')(server);
+app.set('clientSocket', {});
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
