@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 01, 2016 at 06:10 AM
+-- Generation Time: Nov 01, 2016 at 11:07 AM
 -- Server version: 5.7.12
 -- PHP Version: 7.0.10-1+deb.sury.org~trusty+1
 
@@ -69,6 +69,18 @@ CREATE TABLE `groups` (
   `user_id` varchar(50) NOT NULL,
   `admin_id` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `groups`
+--
+
+INSERT INTO `groups` (`id`, `name`, `user_id`, `admin_id`) VALUES
+('6cf7c712-a18d-4d13-886e-bd2ef3d66b68', 'Hello', '01fa85ea-d2bc-4852-ab35-7db61c0d37b2', '01fa85ea-d2bc-4852-ab35-7db61c0d37b2'),
+('6cf7c712-a18d-4d13-886e-bd2ef3d66b68', 'Hello', '5b1ec427-7d0e-491e-b136-bfae421378b0', '01fa85ea-d2bc-4852-ab35-7db61c0d37b2'),
+('6cf7c712-a18d-4d13-886e-bd2ef3d66b68', 'Hello', '856d434b-fa99-4061-8275-15f918bcab76', '01fa85ea-d2bc-4852-ab35-7db61c0d37b2'),
+('96807fac-6e0f-440d-b530-44bf17498037', 'Hello 2', '01fa85ea-d2bc-4852-ab35-7db61c0d37b2', '01fa85ea-d2bc-4852-ab35-7db61c0d37b2'),
+('96807fac-6e0f-440d-b530-44bf17498037', 'Hello 2', '5b1ec427-7d0e-491e-b136-bfae421378b0', '01fa85ea-d2bc-4852-ab35-7db61c0d37b2'),
+('96807fac-6e0f-440d-b530-44bf17498037', 'Hello 2', '856d434b-fa99-4061-8275-15f918bcab76', '01fa85ea-d2bc-4852-ab35-7db61c0d37b2');
 
 -- --------------------------------------------------------
 
