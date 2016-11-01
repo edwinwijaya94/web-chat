@@ -1,12 +1,10 @@
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+<html> 
+    <head>     
+        <meta charset="utf-8" />     
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />     
+        <meta name="description" content="" />     
+        <meta name="author" content="" />
     <title>Chat Box</title>
-
-
     <!-- BOOTSTRAP CORE STYLE CSS -->
     <link href="/stylesheets/bootstrap.css" rel="stylesheet" />
     <!-- FONT AWESOME  CSS -->
@@ -14,24 +12,8 @@
     <!-- CUSTOM STYLE CSS -->
     <link href="/stylesheets/style.css" rel="stylesheet" />
 </head>
-<body>
+<body ng-app="web-chat">
     <div class="container">
-        <div class="user-box-div">
-            <div class="user-box-head">
-                USER
-            </div>
-            <div class="panel-body chat-box-main">
-                <div class="user-box-name">
-                    <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
-                    <span style="font-weight:bold">Justine Goliyad</span>
-                    <div class="btn-group pull-right margin-top-15">
-                        <button type="button" class="btn btn-danger" aria-expanded="false">
-                            <span>Logout</span>
-                        </button>
-                    </div>
-                </div>
-            </div>  
-        </div>
         <div class="row pad-top pad-bottom">
             <div class=" col-lg-6 col-md-6 col-sm-6">
                 <div class="chat-box-div">
@@ -100,7 +82,26 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-3 col-sm-3">
+            <div class="col-lg-6 col-md-6 col-sm-6" ng-controller="userController">
+                <div class="user-box-div">
+                    <div class="user-box-head">
+                        USER
+                    </div>
+                    <div class="panel-body chat-box-main">
+                        <div class="user-box-name">
+                            <img ng-src={{user.photo_url}} alt="bootstrap Chat box user image" class="img-circle width-50" />
+                            <span style="font-weight:bold">{{user.name}}</span>
+                            <div class="btn-group pull-right margin-top-15">
+                                <button type="button" class="btn btn-danger" aria-expanded="false">
+                                    <span>Logout</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3" ng-controller="friendController">
                 <div class="chat-box-online-div">
                     <div class="chat-box-online-head">
                         FRIEND LIST
@@ -110,68 +111,18 @@
                             </button>
                         </div>
                     </div>
-                    <div class="panel-body chat-box-online">
+                    <div ng-repeat="friend in friends" class="panel-body chat-box-online">
                         <div class="chat-box-online-left">
-                            <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Justine Goliyad
+                            <img src={{friend.photo_url}} alt="bootstrap Chat box user image" class="img-circle" />
+                            {{friend.name}}
                             <br />
-                            ( <small>Active from 3 hours</small> )
-                        </div>
-                        <hr class="hr-clas-low" />
-                        <div class="chat-box-online-right">
-                            <img src="/img/user.gif" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Romin Royeelin
-                            <br />
-                            ( <small>Active from 10 hours</small> )
-                        </div>
-                        <hr class="hr-clas-low" />
-                        <div class="chat-box-online-left">
-                            <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Justine Goliyad
-                            <br />
-                            ( <small>Active from 3 hours</small> )
-                        </div>
-                        <hr class="hr-clas-low" />
-                        <div class="chat-box-online-right">
-                            <img src="/img/user.gif" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Romin Royeelin
-                            <br />
-                            ( <small>Active from 10 hours</small> )
-                        </div>
-                        <hr class="hr-clas-low" />
-                        <div class="chat-box-online-left">
-                            <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Justine Goliyad
-                            <br />
-                            ( <small>Active from 3 hours</small> )
-                        </div>
-                        <hr class="hr-clas-low" />
-                        <div class="chat-box-online-right">
-                            <img src="/img/user.gif" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Romin Royeelin
-                            <br />
-                            ( <small>Active from 10 hours</small> )
-                        </div>
-                        <hr class="hr-clas-low" />
-                        <div class="chat-box-online-left">
-                            <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Justine Goliyad
-                            <br />
-                            ( <small>Active from 3 hours</small> )
-                        </div>
-                        <hr class="hr-clas-low" />
-                        <div class="chat-box-online-right">
-                            <img src="/img/user.gif" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Romin Royeelin
-                            <br />
-                            ( <small>Active from 10 hours</small> )
                         </div>
                         <hr class="hr-clas-low" />
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-3 col-sm-3">
+            <div class="col-lg-3 col-md-3 col-sm-3" ng-controller="groupController">
                 <div class="chat-group-new-div">
                     <div class="chat-group-new-head">
                         GROUP LIST
@@ -182,69 +133,14 @@
                         </div>
 
                     </div>
-                    <div class="panel-body chat-group-new">
+                    <div class="panel-body chat-group-new" ng-repeat="group in groups">
                         <div class="chat-group-new-left">
                             <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Justine Goliyad
+                            {{group.name}}
                             <br />
-                            ( <small>Active from 3 hours</small> )
-                        </div>
-                        <hr class="hr-clas-low" />
-
-                        <div class="chat-group-new-right">
-                            <img src="/img/user.gif" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Romin Royeelin
-                            <br />
-                            ( <small>Active from 10 hours</small> )
-                        </div>
-                        <hr class="hr-clas-low" />
-                        <div class="chat-group-new-left">
-                            <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Justine Goliyad
-                            <br />
-                            ( <small>Active from 3 hours</small> )
-                        </div>
-                        <hr class="hr-clas-low" />
-
-                        <div class="chat-group-new-right">
-                            <img src="/img/user.gif" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Romin Royeelin
-                            <br />
-                            ( <small>Active from 10 hours</small> )
-                        </div>
-                        <hr class="hr-clas-low" />
-                        <div class="chat-group-new-left">
-                            <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Justine Goliyad
-                            <br />
-                            ( <small>Active from 3 hours</small> )
-                        </div>
-                        <hr class="hr-clas-low" />
-
-                        <div class="chat-group-new-right">
-                            <img src="/img/user.gif" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Romin Royeelin
-                            <br />
-                            ( <small>Active from 10 hours</small> )
-                        </div>
-                        <hr class="hr-clas-low" />
-                        <div class="chat-group-new-left">
-                            <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Justine Goliyad
-                            <br />
-                            ( <small>Active from 3 hours</small> )
-                        </div>
-                        <hr class="hr-clas-low" />
-
-                        <div class="chat-group-new-right">
-                            <img src="/img/user.gif" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Romin Royeelin
-                            <br />
-                            ( <small>Active from 10 hours</small> )
                         </div>
                         <hr class="hr-clas-low" />
                     </div>
-
                 </div>
 
             </div>
@@ -256,6 +152,9 @@
     <script src="../public/js/jquery-1.11.1.js"></script>
     <!-- CORE BOOTSTRAP SCRIPTS  FILE -->
     <script src="../public/js/bootstrap.js"></script>
+    <!-- CORE ANGULAR SCRIPTS  FILE -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="/js/index.js"></script>
 </body>
 
 </html>
