@@ -1,0 +1,160 @@
+<html> 
+    <head>     
+        <meta charset="utf-8" />     
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />     
+        <meta name="description" content="" />     
+        <meta name="author" content="" />
+    <title>Chat Box</title>
+    <!-- BOOTSTRAP CORE STYLE CSS -->
+    <link href="/stylesheets/bootstrap.css" rel="stylesheet" />
+    <!-- FONT AWESOME  CSS -->
+    <link href="/stylesheets/font-awesome.css" rel="stylesheet" />
+    <!-- CUSTOM STYLE CSS -->
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+</head>
+<body ng-app="web-chat">
+    <div class="container">
+        <div class="row pad-top pad-bottom">
+            <div class=" col-lg-6 col-md-6 col-sm-6">
+                <div class="chat-box-div">
+                    <div class="chat-box-head">
+                        CHAT ROOM
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <span class="fa fa-cogs"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#"><span class="fa fa-map-marker"></span>&nbsp;Invisible</a></li>
+                                <li><a href="#"><span class="fa fa-comments-o"></span>&nbsp;Online</a></li>
+                                <li><a href="#"><span class="fa fa-lock"></span>&nbsp;Busy</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#"><span class="fa fa-circle-o-notch"></span>&nbsp;Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body chat-box-main">
+                        <div class="chat-box-left">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        </div>
+                        <div class="chat-box-name-left">
+                            <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
+                            -  Justine Goliyad
+                        </div>
+                        <hr class="hr-clas" />
+                        <div class="chat-box-right">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        </div>
+                        <div class="chat-box-name-right">
+                            <img src="/img/user.gif" alt="bootstrap Chat box user image" class="img-circle" />
+                            - Romin Royeelin
+                        </div>
+                        <hr class="hr-clas" />
+                        <div class="chat-box-left">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        </div>
+                        <div class="chat-box-name-left">
+                            <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
+                            -  Justine Goliyad
+                        </div>
+                        <hr class="hr-clas" />
+                        <div class="chat-box-right">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        </div>
+                        <div class="chat-box-name-right">
+                            <img src="/img/user.gif" alt="bootstrap Chat box user image" class="img-circle" />
+                            - Romin Royeelin
+                        </div>
+                        <hr class="hr-clas" />
+                    </div>
+                    <div class="chat-box-footer">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Enter Text Here...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-info" type="button">SEND</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6" ng-controller="userController">
+                <div class="user-box-div">
+                    <div class="user-box-head">
+                        USER
+                    </div>
+                    <div class="panel-body chat-box-main">
+                        <div class="user-box-name">
+                            <img ng-src={{user.photo_url}} alt="bootstrap Chat box user image" class="img-circle width-50" />
+                            <span style="font-weight:bold">{{user.name}}</span>
+                            <div class="btn-group pull-right margin-top-15">
+                                <button type="button" class="btn btn-danger" aria-expanded="false">
+                                    <span>Logout</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3" ng-controller="friendController">
+                <div class="chat-box-online-div">
+                    <div class="chat-box-online-head">
+                        FRIEND LIST
+                        <div class="btn-group pull-right bottom-4">
+                            <button type="button" class="btn btn-success" aria-expanded="false">
+                                <span class="fa fa-plus"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div ng-repeat="friend in friends" class="panel-body chat-box-online">
+                        <div class="chat-box-online-left">
+                            <img src={{friend.photo_url}} alt="bootstrap Chat box user image" class="img-circle" />
+                            {{friend.name}}
+                            <br />
+                        </div>
+                        <hr class="hr-clas-low" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3" ng-controller="groupController">
+                <div class="chat-group-new-div">
+                    <div class="chat-group-new-head">
+                        GROUP LIST
+                        <div class="btn-group pull-right bottom-4">
+                            <button type="button" class="btn btn-warning" aria-expanded="false">
+                                <span class="fa fa-plus"></span>
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="panel-body chat-group-new" ng-repeat="group in groups">
+                        <div class="chat-group-new-left">
+                            <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
+                            {{group.name}}
+                            <br />
+                        </div>
+                        <hr class="hr-clas-low" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- USING SCRIPTS BELOW TO REDUCE THE LOAD TIME -->
+    <!-- CORE JQUERY SCRIPTS FILE -->
+    <script src="../public/js/jquery-1.11.1.js"></script>
+    <!-- CORE BOOTSTRAP SCRIPTS  FILE -->
+    <script src="../public/js/bootstrap.js"></script>
+    <!-- CORE ANGULAR SCRIPTS  FILE -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="/js/index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Sign-Up/Login Form</title>
+  <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="stylesheets/login.css">
+</head>
+
+<body>
+  <div class="form">
+      <ul class="tab-group">
+        <li class="tab active"><a href="/register">Register</a></li>
+        <li class="tab"><a href="/login">Log In</a></li>
+      </ul>
+      <h1>Register for Free</h1>
+      <form action="/" method="post">
+        <div class="field-wrap">
+          <input type="text" name="name" required autocomplete="off" placeholder="Name"/>
+        </div>
+        <div class="field-wrap">
+          <input type="password" name="password" required autocomplete="off" placeholder="Set a Password"/>
+        </div>
+        <button type="submit" class="button button-block"/>Sign Up</button>
+      </form>
+      
+</div> <!-- /form -->
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src="/js/register.js"></script>
+
+</body>
+</html>
