@@ -239,4 +239,38 @@ router.post('/add' , function(req, res) {
 	});
 });
 
+//get group list of a user
+router.get('/groups' , function(req, res) {
+	var id = req.query.id; //user id
+	var result = {};
+	
+	mysql.getConnection(function(err, connection) {
+		if(err){
+			res.json(err);
+		}
+
+		async.series([function(callback) {
+			connection.query('SELECT id, name FROM groups WHERE user_id = ?', [id], function(err, rows, fields) {
+				if(err) {
+					callback(err);
+				} else {
+					result.data = rows;
+					callback(null);
+				}
+			});		
+		}], function(err) {
+				connection.release();
+				if(err) {
+					res.status(500);
+					res.json({
+						error : err.message
+					})
+				} else {
+					res.json(result);
+				}
+			}
+		);
+	});
+});
+
 module.exports = router;
