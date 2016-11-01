@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 29, 2016 at 04:56 PM
+-- Generation Time: Nov 01, 2016 at 06:10 AM
 -- Server version: 5.7.12
 -- PHP Version: 7.0.10-1+deb.sury.org~trusty+1
 
@@ -45,6 +45,18 @@ CREATE TABLE `friend` (
   `friend_id` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `friend`
+--
+
+INSERT INTO `friend` (`user_id`, `friend_id`) VALUES
+('2aa7f672-e70a-4b71-a608-8bb2ff83e6d3', 'd162f8db-c006-4574-8c93-b25a7df777d9'),
+('b94066c3-170b-41af-8ce5-2063f018e917', 'e4b1dce0-03ec-4cfe-a895-d277b52a4f27'),
+('b94066c3-170b-41af-8ce5-2063f018e917', 'e5e7795c-72fa-46de-b722-518405076a5f'),
+('d162f8db-c006-4574-8c93-b25a7df777d9', '2aa7f672-e70a-4b71-a608-8bb2ff83e6d3'),
+('e4b1dce0-03ec-4cfe-a895-d277b52a4f27', 'b94066c3-170b-41af-8ce5-2063f018e917'),
+('e5e7795c-72fa-46de-b722-518405076a5f', 'b94066c3-170b-41af-8ce5-2063f018e917');
+
 -- --------------------------------------------------------
 
 --
@@ -84,6 +96,23 @@ CREATE TABLE `user` (
   `password` varchar(50) NOT NULL,
   `photo_url` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `name`, `password`, `photo_url`) VALUES
+('01fa85ea-d2bc-4852-ab35-7db61c0d37b2', 'gerry', 'terserah', 'http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png'),
+('2aa7f672-e70a-4b71-a608-8bb2ff83e6d3', 'edwin', 'secret', 'http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png'),
+('4577946d-7452-44c3-a6a2-150f749a554e', 'tio', 'terserah', 'http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png'),
+('5b1ec427-7d0e-491e-b136-bfae421378b0', 'jessica', 'terserah', 'http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png'),
+('856d434b-fa99-4061-8275-15f918bcab76', 'try', 'terserah', 'http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png'),
+('b94066c3-170b-41af-8ce5-2063f018e917', 'david', 'terserah', 'http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png'),
+('c02df700-9d1a-4979-83c6-31bca1b9f4db', 'elvan', 'gelut', 'http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png'),
+('d162f8db-c006-4574-8c93-b25a7df777d9', 'randi', 'secrets', 'http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png'),
+('e4b1dce0-03ec-4cfe-a895-d277b52a4f27', 'vincent', 'apapun', 'http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png'),
+('e5e7795c-72fa-46de-b722-518405076a5f', 'erick', 'terserah', 'http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png'),
+('f25c4e79-0a1a-45a8-b7ca-338c921cbcba', 'vicko', 'terserah', 'http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png');
 
 --
 -- Indexes for dumped tables
