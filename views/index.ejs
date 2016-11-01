@@ -105,11 +105,17 @@
                 <div class="chat-box-online-div">
                     <div class="chat-box-online-head">
                         FRIEND LIST
-                        <div class="btn-group pull-right bottom-4">
+                        <div class="btn-group pull-right bottom-4" ng-click="newFriendOnClick()">
                             <button type="button" class="btn btn-success" aria-expanded="false">
                                 <span class="fa fa-plus"></span>
                             </button>
                         </div>
+                    </div>
+                    <div ng-show="inviteNewFriend">
+                        <form class="form-inline margin-top-10" ng-submit="addNewFriend()">
+                            <input class="form-control grow chat-box-add-new" type="text" name="add-friend" ng-model="newFriendName"/>
+                            <button class="form-control btn btn-success" type="submit"/>Add</button>
+                        </form>
                     </div>
                     <div ng-repeat="friend in friends" class="panel-body chat-box-online">
                         <div class="chat-box-online-left">
