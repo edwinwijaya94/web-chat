@@ -7,7 +7,7 @@ Web chat using rabbit-mq
  - Get user by ID : `GET api/user?id=...`
  - Register new user : `POST api/user/register`. JSON format with params : `name`, `password`, `photo_url`(optional, leave blank `""` to use default photo).
  - Login : `POST api/user/login`. JSON format with params : `name`, `password`.
- - Add friend : `POST api/user/add`. JSON format with params : `user_id`, `friend_id`.
+ - Add friend : `POST api/user/add`. JSON format with params : `user_id`, `friend_name`.
  - Get friend list : `GET api/user/friends?id=...` 
  - Get group list : `GET api/user/groups?id=...` 
 

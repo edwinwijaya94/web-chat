@@ -186,7 +186,8 @@ router.get('/friends' , function(req, res) {
 //add a friend, assume friends exist
 router.post('/add' , function(req, res) {
 	var userId = req.body.user_id; //user id
-	var friendId = req.body.friend_id; //user id
+	var friendName = req.body.friend_name; //friend name
+	var friendId;
 
 	var result;
 
@@ -196,6 +197,17 @@ router.post('/add' , function(req, res) {
 		}
 
 		async.series([
+			function(callback) {
+				connection.query('SELECT id FROM user WHERE name = ?', [friendName], function(err, rows, fields) {
+					if(err) {
+						callback(err);
+					} else {
+						friendId = rows[0].id;
+						console.log(friendId);
+						callback(null);
+					}
+				});		
+			},
 			function(callback) {
 				connection.query('INSERT INTO friend(user_id, friend_id) VALUES(?, ?)', [userId, friendId], function(err, rows, fields) {
 					if(err) {
