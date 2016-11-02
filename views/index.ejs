@@ -19,6 +19,11 @@
                 <div class="chat-box-div">
                     <div class="chat-box-head">
                         {{roomName}} ROOM
+                        <br>
+                            <span ng-repeat="member in groupDetail.member">
+                                ({{member.name}})
+                            </span>
+                        
                          <div class="btn-group pull-right bottom-4" ng-show="groupDetail">
                             <button type="button" class="btn btn-info" aria-expanded="false" ng-click="addMemberOnClick()">
                                 <span class="fa fa-plus"></span>
@@ -41,59 +46,29 @@
                                 <button class="form-control btn btn-danger" type="submit"/>Kick</button>
                             </form>
                         </div>
-
                     </div>
 
-                    <div class="panel-body chat-box-main">
-                        <div class="chat-box-left">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                           <small>   Active from 3 hours</small>
+                    <div class="panel-body chat-box-main" ng-controller="showUserChatController">
+                        <div ng-repeat="chat in chatData.data">
+                            <div class="chat-box-left">
+                                {{chat.chat}}
+                               <small class="chat-time">{{chat.date_time}}</small>
+                            </div>
+                            <div class="chat-box-name-left">
+                                <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
+                                -  {{chat.name}}
+                            </div>
+                            <hr class="hr-clas" />
                         </div>
-                        <div class="chat-box-name-left">
-                            <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Justine Goliyad
-                        </div>
-                        <hr class="hr-clas" />
-                        <div class="chat-box-right">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                           <small>   Active from 3 hours</small>
-                        </div>
-
-                        <div class="chat-box-name-right">
-                            <img src="/img/user.gif" alt="bootstrap Chat box user image" class="img-circle" />
-                            - Romin Royeelin
-                        </div>
-                        <hr class="hr-clas" />
-                        <div class="chat-box-left">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                           <small>   Active from 3 hours</small>
-                        </div>
-                        <div class="chat-box-name-left">
-                            <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
-                            -  Justine Goliyad
-                        </div>
-                        <hr class="hr-clas" />
-                        <div class="chat-box-right">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                           <small>   Active from 3 hours</small>
-                        </div>
-                        <div class="chat-box-name-right">
-                            <img src="/img/user.gif" alt="bootstrap Chat box user image" class="img-circle" />
-                            - Romin Royeelin
-                        </div>
-                        <hr class="hr-clas" />
                     </div>
-                    <div class="chat-box-footer">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Enter Text Here...">
+                    
+                    <div class="chat-box-footer" ng-controller="newChatUserController">
+                        <form class="input-group" ng-submit="postNewChat()">
+                            <input type="text" class="form-control" placeholder="Enter Text Here..." ng-model="newChat">
                             <span class="input-group-btn">
-                                <button class="btn btn-info" type="button">SEND</button>
+                                <button class="btn btn-info" type="submit">SEND</button>
                             </span>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -103,7 +78,7 @@
                     <div class="user-box-head">
                         USER
                     </div>
-                    <div class="panel-body chat-box-main">
+                    <div class="panel-body">
                         <div class="user-box-name">
                             <img ng-src={{user.photo_url}} alt="bootstrap Chat box user image" class="img-circle width-50" />
                             <span style="font-weight:bold">{{user.name}}</span>
@@ -187,6 +162,7 @@
     <!-- CORE ANGULAR SCRIPTS  FILE -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="/js/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
 </body>
 
 </html>

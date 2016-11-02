@@ -50,6 +50,7 @@ app.controller("friendController", function($scope, $http){
             .then(function(response) {
                 $scope.newFriendOnClick();
                 $scope.friends.push(response.data)
+                friendData[response.data.id] = response.data;
             }, function(response){
                 $scope.errorMessage = response.data.error
             });
@@ -105,6 +106,7 @@ app.controller("groupController", function($scope, $http){
             .then(function(response) {
                 $scope.newGroupOnClick();
                 $scope.groups.push(response.data)
+                groupData[response.data.id] = response.data;
             }, function(response){
                 $scope.errorMessage = response.data.error
             });
@@ -131,29 +133,27 @@ app.controller("chatController", function($scope, $http){
 
 	$scope.$on('openFriendChatEvent',function(event,args){
 		var friend = args["friend"];
+		console.log("friend",friend)
 		$scope.groupDetail = null;
-		$scope.chatRoom = friend;
+		$scope.chatFriend = friend;
 		$scope.roomName = friend.name;
-		console.log("Friend chatRoom",$scope.chatRoom);
 	})
 
 	$scope.$on('openGroupChatEvent',function(event,args){
 		var group = args["group"];
-		$scope.chatRoom = group;
+		$scope.chatFriend=null;
+		$scope.chatGroup = group;
 		$scope.roomName = group.name;
 
 		$http.get("/api/group?id="+group.id).then(function(response){
 			$scope.groupDetail = response.data;
-			console.log($scope.groupDetail)
-			console.log("group chatRoom",$scope.chatRoom);
-			console.log("group Detail", $scope.groupDetail)
 		});
 	})
-
 	$scope.addNewMemberGroup = false;
 	$scope.kickGroupMember = false;
 
 	$scope.addMemberOnClick = function(){
+		$scope.kickGroupMember = false;
 		$scope.addNewMemberGroup = !$scope.addNewMemberGroup
 
 		$scope.newMemberName = ""
@@ -163,6 +163,7 @@ app.controller("chatController", function($scope, $http){
 		$http.post("/api/group/add", {group_id: $scope.groupDetail.id , member_name: $scope.newMemberName})
 			.then(function(response) {
                 $scope.addMemberOnClick();
+                $scope.groupDetail = (response.data);
                 console.log(response)
             }, function(response){
                 $scope.errorMessage = response.data.error
@@ -170,6 +171,7 @@ app.controller("chatController", function($scope, $http){
 	}
 
 	$scope.kickMemberOnClick = function(){
+		$scope.addNewMemberGroup = false;
 		$scope.kickGroupMember = !$scope.kickGroupMember
 
 		$scope.memberName = ""
@@ -178,14 +180,128 @@ app.controller("chatController", function($scope, $http){
 	$scope.kickMember = function(){
 		$http.post("/api/group/remove", {group_id: $scope.groupDetail.id , member_name: $scope.memberName})
 			.then(function(response) {
+				for(var i = 0; i < $scope.groupDetail.member.length ; i++){
+					if ($scope.groupDetail.member[i].name === $scope.memberName){
+						$scope.groupDetail.member.splice(i,1);
+					}
+				}
                 $scope.kickMemberOnClick();
                 console.log(response)
             }, function(response){
                 $scope.errorMessage = response.data.error
             });
 	}
-
 });
+
+app.controller("showUserChatController", function($scope,$http){
+	var id = getParameterByName("id");
+	$http.get("/api/user?id="+id).then(function(response){
+		$scope.userName = response.data.name;
+	});
+
+	$scope.$on('openFriendChatEvent',function(event,args){
+		var friend = args["friend"];
+		$scope.chatFriend = friend;
+
+		if($scope.chatFriend){
+			$http.get("api/chat/user?user_id=" + id + "&friend_id="+$scope.chatFriend.id).then(function(response){
+				$scope.chatData = response.data;
+				for (var i = 0; i < $scope.chatData.data.length ; i++){
+					$scope.chatData.data[i].date_time = moment($scope.chatData.data[i].date_time).fromNow()
+				}
+			});
+		}
+	})
+
+	$scope.$on('openGroupChatEvent',function(event,args){
+		var group = args["group"];
+		$scope.chatGroup = group;
+
+		$http.get("/api/group?id="+group.id).then(function(response){
+			$scope.groupDetail = response.data;
+
+			if($scope.groupDetail){
+				$http.get("api/chat/group?group_id=" + $scope.groupDetail.id).then(function(response){
+					$scope.chatData = response.data;
+					for (var i = 0; i < $scope.chatData.data.length ; i++){
+						$scope.chatData.data[i].date_time = moment($scope.chatData.data[i].date_time).fromNow()
+					}
+				});
+			}
+		});
+
+	})	
+
+	$scope.$on("openNewChatEvent",function(event,args){
+		var chatData = args["chatData"];
+		$scope.chatData = chatData;
+	})
+})
+
+app.controller("newChatUserController", function($scope, $http){
+	var id = getParameterByName("id");
+	$http.get("/api/user?id="+id).then(function(response){
+		$scope.userName = response.data.name;
+	});
+
+	$scope.$on('openFriendChatEvent',function(event,args){
+		var friend = args["friend"];
+		$scope.chatFriend = friend;
+
+		if($scope.chatFriend){
+			console.log($scope.newChat)
+			$scope.postNewChat = function(){
+				$http.post("/api/chat/user", {user_id: id , friend_id: $scope.chatFriend.id, chat: $scope.newChat})
+					.then(function(response) {
+						$scope.newChat = "";
+						$http.get("api/chat/user?user_id=" + id + "&friend_id="+$scope.chatFriend.id).then(function(response){
+								$scope.chatData = response.data;
+								for (var i = 0; i < $scope.chatData.data.length ; i++){
+									$scope.chatData.data[i].date_time = moment($scope.chatData.data[i].date_time).fromNow()
+								}
+								console.log("chatdata", $scope.chatData.data)
+								$scope.$emit('postNewChatEvent',{
+									chatData: $scope.chatData
+								})
+							});
+		            }, function(response){
+		                $scope.errorMessage = response.data.error
+		            });
+			}	
+		}
+	})
+
+	$scope.$on('openGroupChatEvent',function(event,args){
+		var group = args["group"];
+		$scope.chatGroup = group;
+
+		$http.get("/api/group?id="+group.id).then(function(response){
+			$scope.groupDetail = response.data;
+
+			if($scope.groupDetail){
+				console.log($scope.newChat)
+				$scope.postNewChat = function(){
+					$http.post("/api/chat/group", {user_id: id , group_id: $scope.groupDetail.id, chat: $scope.newChat})
+						.then(function(response) {
+							$scope.newChat = "";
+							$http.get("api/chat/group?group_id="+$scope.groupDetail.id).then(function(response){
+								$scope.chatData = response.data;
+								console.log(response.data)
+								for (var i = 0; i < $scope.chatData.data.length ; i++){
+									$scope.chatData.data[i].date_time = moment($scope.chatData.data[i].date_time).fromNow()
+								}
+								$scope.$emit('postNewChatEvent',{
+									chatData: $scope.chatData
+								})
+							});
+			            }, function(response){
+			                $scope.errorMessage = response.data.error
+			            });
+				}	
+			}
+		});
+	})
+})
 
 app.controller("appController", function($scope,$http){
 	$scope.$on("friendClickEvent", function(event,args){
@@ -195,6 +311,9 @@ app.controller("appController", function($scope,$http){
 	$scope.$on("groupClickEvent", function(event,args){
 		$scope.$broadcast("openGroupChatEvent",args)
 	})
+
+	$scope.$on("postNewChatEvent", function(event,args){
+		$scope.$broadcast("openNewChatEvent",args)
+	})
 });
 
-app.controller()

@@ -21,7 +21,7 @@ body {
 }
 
 .chat-box-main {
-    max-height:500px;
+    height:500px;
     overflow:auto;
 }
 .chat-box-div {
@@ -265,4 +265,9 @@ text-align: center;
 
 .width-50{
     width: 50px;
+}
+
+.chat-time{
+    color: red;
+    font-weight: bold;
 }
