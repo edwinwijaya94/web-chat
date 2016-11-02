@@ -15,6 +15,7 @@ Web chat using rabbit-mq
  - Get group by ID : `GET api/group?id=...`
  - Create new group : `POST api/group/create`
    example :
+
    ```
    {
 	  "name": "Hello 3",
@@ -25,27 +26,32 @@ Web chat using rabbit-mq
 	  "admin_id": "01fa85ea-d2bc-4852-ab35-7db61c0d37b2"
    }
    ```
+
  - Add a member to group : `POST api/group/add`
  	example :
+
  	```
  	{
 		"group_id":"6cf7c712-a18d-4d13-886e-bd2ef3d66b68",
 		"member_name":"erick"
 	}
  	```
+
  - Remove a member from group : `POST api/group/remove`
  	example :
+
  	```
  	{
 		"group_id":"6cf7c712-a18d-4d13-886e-bd2ef3d66b68",
 		"member_name":"erick"
 	}
  	```
- 
+
 ### Chat
  - Get chat of user and friend : `GET api/chat/user?user_id=...&friend_id=...`
  - Send personal chat : `POST api/chat/user`
   example : 
+
   ```
   {
 	"user_id":"01fa85ea-d2bc-4852-ab35-7db61c0d37b2",
@@ -53,3 +59,4 @@ Web chat using rabbit-mq
 	"chat":"I dont know"
   }
   ```
+  
