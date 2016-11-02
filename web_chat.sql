@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 02, 2016 at 07:52 AM
+-- Generation Time: Nov 02, 2016 at 09:50 AM
 -- Server version: 5.7.12
 -- PHP Version: 7.0.10-1+deb.sury.org~trusty+1
 
@@ -42,7 +42,9 @@ INSERT INTO `chat` (`user_id`, `date_time`, `friend_id`, `chat`, `status`) VALUE
 ('01fa85ea-d2bc-4852-ab35-7db61c0d37b2', '2016-11-02 12:59:00', '2aa7f672-e70a-4b71-a608-8bb2ff83e6d3', 'Hello World', 'unread'),
 ('01fa85ea-d2bc-4852-ab35-7db61c0d37b2', '2016-11-02 14:13:12', '2aa7f672-e70a-4b71-a608-8bb2ff83e6d3', 'Hello again', 'unread'),
 ('01fa85ea-d2bc-4852-ab35-7db61c0d37b2', '2016-11-02 14:14:01', '2aa7f672-e70a-4b71-a608-8bb2ff83e6d3', 'Who am I', 'unread'),
-('01fa85ea-d2bc-4852-ab35-7db61c0d37b2', '2016-11-02 14:15:35', '2aa7f672-e70a-4b71-a608-8bb2ff83e6d3', 'I dont know', 'unread');
+('01fa85ea-d2bc-4852-ab35-7db61c0d37b2', '2016-11-02 14:15:35', '2aa7f672-e70a-4b71-a608-8bb2ff83e6d3', 'I dont know', 'unread'),
+('01fa85ea-d2bc-4852-ab35-7db61c0d37b2', '2016-11-02 15:58:14', '2aa7f672-e70a-4b71-a608-8bb2ff83e6d3', 'Thank you', 'unread'),
+('2aa7f672-e70a-4b71-a608-8bb2ff83e6d3', '2016-11-02 15:57:57', '01fa85ea-d2bc-4852-ab35-7db61c0d37b2', 'I know you', 'unread');
 
 -- --------------------------------------------------------
 
