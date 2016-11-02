@@ -19,12 +19,29 @@
                 <div class="chat-box-div">
                     <div class="chat-box-head">
                         {{roomName}} ROOM
-                        <!-- <div class="btn-group pull-right">
-                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <span class="fa fa-cogs"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
+                         <div class="btn-group pull-right bottom-4" ng-show="groupDetail">
+                            <button type="button" class="btn btn-info" aria-expanded="false" ng-click="addMemberOnClick()">
+                                <span class="fa fa-plus"></span>
                             </button>
-                        </div> -->
+                            <button type="button" class="btn btn-danger" aria-expanded="false" ng-click="kickMemberOnClick()">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </div>
+
+                        <div ng-show="addNewMemberGroup">
+                            <form class="form-inline margin-top-10" ng-submit="addMember()">
+                                <input class="form-control grow group-chat-add" type="text" name="add-friend" ng-model="newMemberName" placeholder="input new member name"/>
+                                <button class="form-control btn btn-info" type="submit"/>Add</button>
+                            </form>
+                        </div>
+
+                        <div ng-show="kickGroupMember">
+                            <form class="form-inline margin-top-10" ng-submit="kickMember()">
+                                <input class="form-control grow group-chat-add" type="text" name="add-friend" ng-model="memberName" placeholder="input member name"/>
+                                <button class="form-control btn btn-danger" type="submit"/>Kick</button>
+                            </form>
+                        </div>
+
                     </div>
 
                     <div class="panel-body chat-box-main">

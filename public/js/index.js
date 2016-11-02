@@ -131,17 +131,59 @@ app.controller("chatController", function($scope, $http){
 
 	$scope.$on('openFriendChatEvent',function(event,args){
 		var friend = args["friend"];
-
+		$scope.groupDetail = null;
+		$scope.chatRoom = friend;
 		$scope.roomName = friend.name;
-		console.log("roomName",$scope.roomName);
+		console.log("Friend chatRoom",$scope.chatRoom);
 	})
 
 	$scope.$on('openGroupChatEvent',function(event,args){
 		var group = args["group"];
-
+		$scope.chatRoom = group;
 		$scope.roomName = group.name;
-		console.log("roomName",$scope.roomName);
+
+		$http.get("/api/group?id="+group.id).then(function(response){
+			$scope.groupDetail = response.data;
+			console.log($scope.groupDetail)
+			console.log("group chatRoom",$scope.chatRoom);
+			console.log("group Detail", $scope.groupDetail)
+		});
 	})
+
+	$scope.addNewMemberGroup = false;
+	$scope.kickGroupMember = false;
+
+	$scope.addMemberOnClick = function(){
+		$scope.addNewMemberGroup = !$scope.addNewMemberGroup
+
+		$scope.newMemberName = ""
+	}
+
+	$scope.addMember = function(){
+		$http.post("/api/group/add", {group_id: $scope.groupDetail.id , member_name: $scope.newMemberName})
+			.then(function(response) {
+                $scope.addMemberOnClick();
+                console.log(response)
+            }, function(response){
+                $scope.errorMessage = response.data.error
+            });
+	}
+
+	$scope.kickMemberOnClick = function(){
+		$scope.kickGroupMember = !$scope.kickGroupMember
+
+		$scope.memberName = ""
+	}
+
+	$scope.kickMember = function(){
+		$http.post("/api/group/remove", {group_id: $scope.groupDetail.id , member_name: $scope.memberName})
+			.then(function(response) {
+                $scope.kickMemberOnClick();
+                console.log(response)
+            }, function(response){
+                $scope.errorMessage = response.data.error
+            });
+	}
 
 });
 
@@ -154,3 +196,5 @@ app.controller("appController", function($scope,$http){
 		$scope.$broadcast("openGroupChatEvent",args)
 	})
 });
+
+app.controller()
