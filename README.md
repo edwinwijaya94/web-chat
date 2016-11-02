@@ -59,4 +59,15 @@ Web chat using rabbit-mq
 	"chat":"I dont know"
   }
   ```
-  
+
+ - Get group chat : `GET api/chat/group?group_id=...`
+ - Send group chat : `POST api/chat/group`
+ example :
+
+  	```
+	{
+		"user_id":"c02df700-9d1a-4979-83c6-31bca1b9f4db",
+		"group_id":"0ec07a3d-4d0a-4757-9efb-50900dec7387",
+		"chat":"gelut oi"
+	}
+	```
