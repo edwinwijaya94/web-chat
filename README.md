@@ -11,7 +11,7 @@ Web chat using rabbit-mq
  - Get friend list : `GET api/user/friends?id=...` 
  - Get group list : `GET api/user/groups?id=...` 
 
- ### Group
+### Group
  - Get group by ID : `GET api/group?id=...`
  - Create new group : `POST api/group/create`
    example :
@@ -41,3 +41,15 @@ Web chat using rabbit-mq
 		"member_name":"erick"
 	}
  	```
+ 
+### Chat
+ - Get chat of user and friend : `GET api/chat/user?user_id=...&friend_id=...`
+ - Send personal chat : `POST api/chat/user`
+  example : 
+  ```
+  {
+	"user_id":"01fa85ea-d2bc-4852-ab35-7db61c0d37b2",
+	"friend_id":"2aa7f672-e70a-4b71-a608-8bb2ff83e6d3",
+	"chat":"I dont know"
+  }
+  ```

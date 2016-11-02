@@ -8,6 +8,11 @@ var bodyParser = require('body-parser');
 //init MySQL pool connection
 require('./utils/mysql').init();
 
+//init RabbitMQ connection
+require('./utils/rabbitmq').init(function(){
+  require('./consumers').startListeners();
+});
+
 //include middlewares
 var routes = require('./routes/index');
 var api = require('./api');
@@ -22,6 +27,21 @@ module.exports = {app: app, server: server};
 var io = require('socket.io')(server);
 app.set('clientSocket', {});
 
+// Init auth for socket io and retain mapping between uid and corresponding socket
+require('socketio-auth')(io, {
+  authenticate: function (socket, data, callback) {
+    var id = data.id;
+
+    console.log('Receive socket connection ; ID : ' + id);
+
+    if (uid) {
+        app.get('clientSocket')[uid] = socket;
+        callback(null, true);
+    } else {
+      callback(new Error("Not Authorized"));
+    }
+  }
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
