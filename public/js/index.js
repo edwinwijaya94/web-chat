@@ -56,11 +56,21 @@ app.controller("friendController", function($scope, $http){
             });
 	}
 
-	$scope.friendOnClick = function(friendId){
+
+	var friendTimer;
+
+	var friendFunction = function(friendId){
+		console.log('abc')
 		$scope.clickedFriend = friendId
 		$scope.$emit('friendClickEvent',{
 			friend: friendData[friendId]
 		})
+		friendTimer = setTimeout(friendFunction(friendId),100000);
+	}
+
+
+	$scope.friendOnClick = function(friendId){
+		friendFunction(friendId)
 	}
 
 
@@ -113,10 +123,14 @@ app.controller("groupController", function($scope, $http){
 	}
 
 	$scope.groupOnClick = function(groupId){
-		$scope.clickedGroup = groupId
-		$scope.$emit('groupClickEvent',{
-			group: groupData[groupId]
-		})
+		setTimeout(function(){
+			console.log('def')
+			$scope.clickedGroup = groupId
+			$scope.$emit('groupClickEvent',{
+				group: groupData[groupId]
+			})
+			$scope.groupOnClick(groupId)
+		},1000)
 	}
 
 
@@ -200,6 +214,7 @@ app.controller("showUserChatController", function($scope,$http){
 	});
 
 	$scope.$on('openFriendChatEvent',function(event,args){
+		console.log('aaaa')
 		var friend = args["friend"];
 		$scope.chatFriend = friend;
 
@@ -233,8 +248,9 @@ app.controller("showUserChatController", function($scope,$http){
 	})	
 
 	$scope.$on("openNewChatEvent",function(event,args){
+		console.log('aaaa')
 		var chatData = args["chatData"];
-		$scope.chatData = chatData;
+		$scope.chatData = chatData;	
 	})
 })
 
@@ -315,5 +331,7 @@ app.controller("appController", function($scope,$http){
 	$scope.$on("postNewChatEvent", function(event,args){
 		$scope.$broadcast("openNewChatEvent",args)
 	})
+
+	$scope.$on("killTimerOtherController")
 });
 
