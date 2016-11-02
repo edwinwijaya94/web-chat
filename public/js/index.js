@@ -23,7 +23,7 @@ app.controller("userController", function($scope, $http){
 	};
 });
 
-app.controller("friendController", function($scope, $http){
+app.controller("friendController", function($scope, $http,killTimerService){
 	var id = getParameterByName("id");
 	var friendData = {};
 	$scope.friends = [];
@@ -56,27 +56,26 @@ app.controller("friendController", function($scope, $http){
             });
 	}
 
+	var friend_id;
 
-	var friendTimer;
-
-	var friendFunction = function(friendId){
+	var friendFunction = function(){
 		console.log('abc')
-		$scope.clickedFriend = friendId
+		$scope.clickedFriend = friend_id
 		$scope.$emit('friendClickEvent',{
-			friend: friendData[friendId]
+			friend: friendData[friend_id]
 		})
-		friendTimer = setTimeout(friendFunction(friendId),100000);
+		killTimerService.friendTimer = setTimeout(friendFunction,1000);
 	}
-
 
 	$scope.friendOnClick = function(friendId){
-		friendFunction(friendId)
+		clearTimeout(killTimerService.friendTimer);
+		clearTimeout(killTimerService.groupTimer);
+		friend_id = friendId
+		friendFunction()
 	}
-
-
 });
 
-app.controller("groupController", function($scope, $http){
+app.controller("groupController", function($scope, $http, killTimerService){
 	var id = getParameterByName("id");
 	var groupData = {}
 	$http.get("/api/user?id="+id).then(function(response){
@@ -121,16 +120,21 @@ app.controller("groupController", function($scope, $http){
                 $scope.errorMessage = response.data.error
             });
 	}
+	var group_id;
 
+	var groupFunction = function(){
+		console.log('bcd')
+		$scope.clickedGroup = group_id
+		$scope.$emit('groupClickEvent',{
+			group: groupData[group_id]
+		})
+		killTimerService.groupTimer = setTimeout(groupFunction,1000);
+	}
 	$scope.groupOnClick = function(groupId){
-		setTimeout(function(){
-			console.log('def')
-			$scope.clickedGroup = groupId
-			$scope.$emit('groupClickEvent',{
-				group: groupData[groupId]
-			})
-			$scope.groupOnClick(groupId)
-		},1000)
+		clearTimeout(killTimerService.friendTimer);
+		clearTimeout(killTimerService.groupTimer);
+		group_id = groupId;
+		groupFunction()
 	}
 
 
@@ -214,7 +218,6 @@ app.controller("showUserChatController", function($scope,$http){
 	});
 
 	$scope.$on('openFriendChatEvent',function(event,args){
-		console.log('aaaa')
 		var friend = args["friend"];
 		$scope.chatFriend = friend;
 
@@ -248,7 +251,6 @@ app.controller("showUserChatController", function($scope,$http){
 	})	
 
 	$scope.$on("openNewChatEvent",function(event,args){
-		console.log('aaaa')
 		var chatData = args["chatData"];
 		$scope.chatData = chatData;	
 	})
@@ -265,7 +267,6 @@ app.controller("newChatUserController", function($scope, $http){
 		$scope.chatFriend = friend;
 
 		if($scope.chatFriend){
-			console.log($scope.newChat)
 			$scope.postNewChat = function(){
 				$http.post("/api/chat/user", {user_id: id , friend_id: $scope.chatFriend.id, chat: $scope.newChat})
 					.then(function(response) {
@@ -295,7 +296,6 @@ app.controller("newChatUserController", function($scope, $http){
 			$scope.groupDetail = response.data;
 
 			if($scope.groupDetail){
-				console.log($scope.newChat)
 				$scope.postNewChat = function(){
 					$http.post("/api/chat/group", {user_id: id , group_id: $scope.groupDetail.id, chat: $scope.newChat})
 						.then(function(response) {
@@ -331,7 +331,10 @@ app.controller("appController", function($scope,$http){
 	$scope.$on("postNewChatEvent", function(event,args){
 		$scope.$broadcast("openNewChatEvent",args)
 	})
-
-	$scope.$on("killTimerOtherController")
 });
 
+
+app.service('killTimerService', function() {
+  var friendTimer;
+  var groupTimer;
+});
