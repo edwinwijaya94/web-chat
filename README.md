@@ -41,6 +41,7 @@ Web chat using rabbit-mq
 		"member_name":"erick"
 	}
  	```
+ 
 ### Chat
  - Get chat of user and friend : `GET api/chat/user?user_id=...&friend_id=...`
  - Send personal chat : `POST api/chat/user`
