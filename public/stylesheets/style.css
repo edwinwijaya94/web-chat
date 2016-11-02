@@ -126,6 +126,11 @@ padding: 10px;
     margin-top: 30px;
 } 
 
+.chat-box-online-friend-list{
+    overflow: auto;
+    max-height: 403px;
+}
+
 .chat-box-online-head {
     padding: 10px 15px;
 border-bottom: 2px solid #03DB2F;
@@ -203,6 +208,16 @@ text-align: center;
     border:1px solid #354EA0;
     margin-bottom:10px;  
 }
+
+.chat-group-new-group-list{
+    overflow: auto;
+    max-height: 403px;
+}
+
+.chat-box-group-new{
+    width: 180px !important;
+}
+
 
 
 /*======================================

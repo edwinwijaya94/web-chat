@@ -12,31 +12,26 @@
     <!-- CUSTOM STYLE CSS -->
     <link href="/stylesheets/style.css" rel="stylesheet" />
 </head>
-<body ng-app="web-chat">
+<body ng-app="web-chat" ng-controller="appController">
     <div class="container">
         <div class="row pad-top pad-bottom">
-            <div class=" col-lg-6 col-md-6 col-sm-6">
+            <div class=" col-lg-6 col-md-6 col-sm-6" ng-controller="chatController">
                 <div class="chat-box-div">
                     <div class="chat-box-head">
-                        CHAT ROOM
-                        <div class="btn-group pull-right">
+                        {{roomName}} ROOM
+                        <!-- <div class="btn-group pull-right">
                             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                 <span class="fa fa-cogs"></span>
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#"><span class="fa fa-map-marker"></span>&nbsp;Invisible</a></li>
-                                <li><a href="#"><span class="fa fa-comments-o"></span>&nbsp;Online</a></li>
-                                <li><a href="#"><span class="fa fa-lock"></span>&nbsp;Busy</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><span class="fa fa-circle-o-notch"></span>&nbsp;Logout</a></li>
-                            </ul>
-                        </div>
+                        </div> -->
                     </div>
+
                     <div class="panel-body chat-box-main">
                         <div class="chat-box-left">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                           <small>   Active from 3 hours</small>
                         </div>
                         <div class="chat-box-name-left">
                             <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
@@ -46,7 +41,9 @@
                         <div class="chat-box-right">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                           <small>   Active from 3 hours</small>
                         </div>
+
                         <div class="chat-box-name-right">
                             <img src="/img/user.gif" alt="bootstrap Chat box user image" class="img-circle" />
                             - Romin Royeelin
@@ -55,6 +52,7 @@
                         <div class="chat-box-left">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                           <small>   Active from 3 hours</small>
                         </div>
                         <div class="chat-box-name-left">
                             <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
@@ -64,6 +62,7 @@
                         <div class="chat-box-right">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                           <small>   Active from 3 hours</small>
                         </div>
                         <div class="chat-box-name-right">
                             <img src="/img/user.gif" alt="bootstrap Chat box user image" class="img-circle" />
@@ -92,7 +91,7 @@
                             <img ng-src={{user.photo_url}} alt="bootstrap Chat box user image" class="img-circle width-50" />
                             <span style="font-weight:bold">{{user.name}}</span>
                             <div class="btn-group pull-right margin-top-15">
-                                <button type="button" class="btn btn-danger" aria-expanded="false">
+                                <button type="button" class="btn btn-danger" aria-expanded="false" ng-click="go('/login')">
                                     <span>Logout</span>
                                 </button>
                             </div>
@@ -113,17 +112,19 @@
                     </div>
                     <div ng-show="inviteNewFriend">
                         <form class="form-inline margin-top-10" ng-submit="addNewFriend()">
-                            <input class="form-control grow chat-box-add-new" type="text" name="add-friend" ng-model="newFriendName"/>
+                            <input class="form-control grow chat-box-add-new" type="text" name="add-friend" ng-model="newFriendName" placeholder="input friend name"/>
                             <button class="form-control btn btn-success" type="submit"/>Add</button>
                         </form>
                     </div>
-                    <div ng-repeat="friend in friends" class="panel-body chat-box-online">
-                        <div class="chat-box-online-left">
-                            <img src={{friend.photo_url}} alt="bootstrap Chat box user image" class="img-circle" />
-                            {{friend.name}}
-                            <br />
+                    <div class = "chat-box-online-friend-list">
+                        <div ng-repeat="friend in friends" class="panel-body chat-box-online">
+                            <div class="chat-box-online-left" ng-click="friendOnClick(friend.id)">
+                                <img src={{friend.photo_url}} alt="bootstrap Chat box user image" class="img-circle" />
+                                {{friend.name}}
+                                <br />
+                            </div>
+                            <hr class="hr-clas-low" />
                         </div>
-                        <hr class="hr-clas-low" />
                     </div>
                 </div>
             </div>
@@ -132,20 +133,28 @@
                 <div class="chat-group-new-div">
                     <div class="chat-group-new-head">
                         GROUP LIST
-                        <div class="btn-group pull-right bottom-4">
+                        <div class="btn-group pull-right bottom-4" ng-click="newGroupOnClick()">
                             <button type="button" class="btn btn-warning" aria-expanded="false">
                                 <span class="fa fa-plus"></span>
                             </button>
                         </div>
-
                     </div>
-                    <div class="panel-body chat-group-new" ng-repeat="group in groups">
-                        <div class="chat-group-new-left">
-                            <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
-                            {{group.name}}
-                            <br />
+                    <div ng-show="isCreateNewGroup">
+                        <form class="form-inline margin-top-10" ng-submit="createNewGroup()">
+                            <input class="form-control grow chat-box-group-new" type="text" name="group-name" ng-model="newGroupName" placeholder="input group name"/>
+                            <input class="form-control grow chat-box-group-new" type="text" name="group-members" ng-model="newMember" placeholder="input member name"/>
+                            <button class="form-control btn btn-success" type="submit"/>Create</button>
+                        </form>
+                    </div>
+                    <div class="chat-group-new-group-list">
+                        <div class="panel-body chat-group-new" ng-repeat="group in groups">
+                            <div class="chat-group-new-left" ng-click="groupOnClick(group.id)">
+                                <img src="/img/user.png" alt="bootstrap Chat box user image" class="img-circle" />
+                                {{group.name}}
+                                <br />
+                            </div>
+                            <hr class="hr-clas-low" />
                         </div>
-                        <hr class="hr-clas-low" />
                     </div>
                 </div>
 
