@@ -42,7 +42,7 @@ router.get('/user', function(req, res) {
 		}
 
 		async.series([function(callback) {
-			connection.query('SELECT date_time, chat FROM chat WHERE user_id = ? AND friend_id = ? ORDER BY date_time ASC', [userId, friendId], function(err, rows, fields) {
+			connection.query('SELECT user.name, C.date_time, chat FROM (SELECT user_id, date_time, chat FROM chat WHERE (user_id = ? AND friend_id = ?) OR (user_id = ? AND friend_id = ?) ) C INNER JOIN user ON user.id = C.user_id ORDER BY C.date_time ASC', [userId, friendId, friendId, userId], function(err, rows, fields) {
 				console.log(rows);
 				if(err) {
 					callback(err);
