@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 02, 2016 at 09:50 AM
+-- Generation Time: Nov 02, 2016 at 11:00 AM
 -- Server version: 5.7.12
 -- PHP Version: 7.0.10-1+deb.sury.org~trusty+1
 
@@ -120,6 +120,15 @@ CREATE TABLE `group_chat` (
   `chat` text NOT NULL,
   `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `group_chat`
+--
+
+INSERT INTO `group_chat` (`group_id`, `user_id`, `date_time`, `chat`, `status`) VALUES
+('0ec07a3d-4d0a-4757-9efb-50900dec7387', '01fa85ea-d2bc-4852-ab35-7db61c0d37b2', '2016-11-02 17:09:36', 'Hello group', 'unread'),
+('0ec07a3d-4d0a-4757-9efb-50900dec7387', '5b1ec427-7d0e-491e-b136-bfae421378b0', '2016-11-02 17:23:09', 'I\'m Jessica', 'unread'),
+('0ec07a3d-4d0a-4757-9efb-50900dec7387', 'c02df700-9d1a-4979-83c6-31bca1b9f4db', '2016-11-02 17:24:28', 'gelut oi', 'unread');
 
 -- --------------------------------------------------------
 
