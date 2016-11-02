@@ -107,7 +107,7 @@ router.post('/create' , function(req, res) {
 					if(err) {
 						callback(err);
 					} else {
-						result = rows;
+						result = rows[0];
 						callback(null);
 					}
 				});
