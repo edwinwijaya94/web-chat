@@ -84,7 +84,7 @@ router.post('/register' , function(req, res) {
 					res.status(500);
 					res.json({
 						error : err.message
-					})
+					});
 				} else {
 					res.json(result);
 				}
@@ -134,14 +134,14 @@ router.post('/login' , function(req, res) {
 					res.status(500);
 					res.json({
 						error : err.message
-					})
+					});
 				} else {
 					if(result != null) {
 						res.json(result);
 					} else {
 						res.json({
 							error : "Wrong username or password"
-						})
+						});
 					}
 				}
 			}
@@ -174,7 +174,7 @@ router.get('/friends' , function(req, res) {
 					res.status(500);
 					res.json({
 						error : err.message
-					})
+					});
 				} else {
 					res.json(result);
 				}
@@ -242,7 +242,7 @@ router.post('/add' , function(req, res) {
 					res.status(500);
 					res.json({
 						error : err.message
-					})
+					});
 				} else {
 					res.json(result);
 				}
@@ -276,7 +276,7 @@ router.get('/groups' , function(req, res) {
 					res.status(500);
 					res.json({
 						error : err.message
-					})
+					});
 				} else {
 					res.json(result);
 				}
