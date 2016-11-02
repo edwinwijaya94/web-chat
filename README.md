@@ -1,7 +1,48 @@
 # web-chat
 Web chat using rabbit-mq
 
-## API list
+## Anggota kelompok
+ 1. Edwin Wijaya / 13513040
+ 2. Randi Chilyon Alfianto / 13513087
+
+## Desain Aplikasi
+
+ - Aplikasi menggunakan platform web
+ - RabbitMQ digunakan pada pengiriman chat, baik untuk personal chat maupun group chat. Terdapat 1 exchange yaitu `chat_controller` yang bertugas memasukkan chat yang diterima dari client ke dalam salah satu queue : `personal_chat` atau `group_chat` sesuai dengan jenis chat nya. Terdapat 2 consumers yang bertugas menyimpan chat dari queue ke database.
+
+## Petunjuk Instalasi
+
+ 1. Install NodeJS, MySQL, RabbitMQ
+ 2. Import web_chat.sql ke dalam database
+ 3. Clone repository ini / buka folder source code
+ 4. `$ npm install`
+ 5. `$ npm start`
+ 6. Akses aplikasi pada `localhost:3000`
+
+## Daftar Tes Fitur
+
+ 1. Register
+ 2. Login
+ 3. Add friend
+ 4. Create group
+ 5. Add member to group
+ 6. Remove member to group
+ 7. Personal chat
+ 8. Group chat
+
+## Langkah-Langkah Tes
+
+ 1. Buka aplikasi melalui browser di `localhost:3000`
+ 2. Register akun baru di `localhost:3000/register`
+ 3. Login di `localhost:3000/login`
+ 4. Add friend dengan klik tombol `+` di friend list kemudian ketik friend name yang akan ditambahkan
+ 5. Friend list menampilkan teman yang pernah di add
+ 6. Add group dengan klik tombol `+` di group list kemudian ketik nama group dan friend name yang akan ditambahkan (separated by comma `,` untuk menambahkan lebih dari 1 teman) 
+ 7. Group list menampilkan daftar group dengan user menjadi member nya
+ 8. Klik salah satu friend untuk melakukan chat. History chat akan ditampilkan pada kotak chat di sebelah kiri secara terurut. Untuk melakukan chat, ketik pesan pada box yang disediakan kemudian tekan enter. History pesan terbaru akan ditampilkan kemudian.
+ 9. Klik salah satu group untuk melakukan group chat. History chat akan ditampilkan pada kotak chat di sebelah kiri secara terurut, berikut dengan nama member yang mengirim setiap chat. Untuk melakukan chat, ketik pesan pada box yang disediakan kemudian tekan enter. History pesan terbaru akan ditampilkan kemudian.
+
+## API List
 
 ### User
  - Get user by ID : `GET api/user?id=...`
